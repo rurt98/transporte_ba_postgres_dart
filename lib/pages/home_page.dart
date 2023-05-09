@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paqueteria_barranco/pages/cars_page.dart';
 import 'package:paqueteria_barranco/pages/rutas_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,7 +28,7 @@ class _HomePageState extends State<HomePage> {
                   _buildCard(
                     txt: 'Rutas',
                     subtitle: 'Rutas registradas',
-                    icon: Icons.drive_eta,
+                    icon: Icons.location_on,
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -37,10 +38,16 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 8),
                   _buildCard(
-                      txt: 'Vehículos',
-                      subtitle: 'Vehículos registrados',
-                      icon: Icons.local_shipping,
-                      onTap: () {}),
+                    txt: 'Vehículos',
+                    subtitle: 'Vehículos registrados',
+                    icon: Icons.local_shipping,
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const CarsPage(),
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   _buildCard(
                       txt: 'Empleados',

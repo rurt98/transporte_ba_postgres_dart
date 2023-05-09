@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paqueteria_barranco/pages/home_page.dart';
+import 'package:paqueteria_barranco/provider/cars_provider.dart';
 import 'package:paqueteria_barranco/provider/rutas_provider.dart';
 import 'package:paqueteria_barranco/services/db_connection.dart';
 import 'package:postgres/postgres.dart';
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) => RutasProvider(connection),
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) => CarsProvider(connection),
             ),
           ],
           child: MaterialApp(
