@@ -25,19 +25,17 @@ class RutasProvider extends ChangeNotifier {
     try {
       loading = true;
       final res = await connection.query(
-        'SELECT id, distancia, nombre, to_char(tiempo, \'HH24:MI:SS\') FROM Ruta',
+        '''
+    SELECT 
+       json_build_object('id', Ruta.id, 'nombre', Ruta.nombre,  'distancia', Ruta.distancia::text, 'tiempo', to_char(Ruta.tiempo, 'HH24:MI:SS'), 'direcciones', json_agg(json_build_object('id', Direccion.id, 'frac_nombre', Direccion.frac_nombre, 'calle', Direccion.calle, 'cp', Direccion.cp, 'colonia', Direccion.colonia,  'estado', Direccion.estado,  'municipio', Direccion.municipio))) AS ruta
+    FROM Ruta
+    LEFT JOIN Direccion ON Ruta.id = Direccion.ruta_id
+    WHERE Direccion.ruta_id > 0
+    GROUP BY Ruta.id, Ruta.distancia, Ruta.tiempo;
+      ''',
       );
 
-      rutas = res
-          .map(
-            (data) => Ruta(
-              id: data[0],
-              distancia: data[1],
-              nombre: data[2],
-              tiempo: data[3],
-            ),
-          )
-          .toList();
+      rutas = res.map((data) => Ruta.fromMap(data)).toList();
 
       loading = false;
       return rutas;
@@ -82,14 +80,32 @@ class RutasProvider extends ChangeNotifier {
     required Function() onError,
   }) async {
     try {
-      await connection.query('''
+      final res = await connection.query('''
         INSERT INTO ruta (distancia,nombre,tiempo)
         VALUES (@distancia,@nombre,@tiempo)
+        RETURNING id
         ''', substitutionValues: {
         'distancia': data['distancia'],
         'nombre': data['nombre'],
         'tiempo': data['tiempo'],
       });
+
+      if (data['addresses'] != null && (data['addresses'] as List).isNotEmpty) {
+        for (var address in data['addresses']) {
+          await connection.query('''
+          INSERT INTO direccion (frac_nombre,calle,cp,colonia,estado,municipio,ruta_id)
+          VALUES (@frac_nombre,@calle,@cp,@colonia,@estado,@municipio,@ruta_id)
+        ''', substitutionValues: {
+            'frac_nombre': address['frac_nombre'],
+            'calle': address['calle'],
+            'cp': address['cp'],
+            'colonia': address['colonia'],
+            'estado': address['estado'],
+            'municipio': address['municipio'],
+            'ruta_id': res[0][0],
+          });
+        }
+      }
 
       getAll();
 
@@ -117,6 +133,24 @@ class RutasProvider extends ChangeNotifier {
         'nombre': data['nombre'],
         'tiempo': data['tiempo'],
       });
+
+      if (data['addresses'] != null && (data['addresses'] as List).isNotEmpty) {
+        for (var address in data['addresses']) {
+          await connection.query('''
+           UPDATE direccion set frac_nombre = @frac_nombre, calle = @calle, cp = @cp, colonia = @colonia, estado = @estado, municipio = @municipio
+            WHERE id = @id
+        ''', substitutionValues: {
+            'id': address['id'],
+            'frac_nombre': address['frac_nombre'],
+            'calle': address['calle'],
+            'cp': address['cp'],
+            'colonia': address['colonia'],
+            'estado': address['estado'],
+            'municipio': address['municipio'],
+            'ruta_id': id,
+          });
+        }
+      }
 
       getAll();
 

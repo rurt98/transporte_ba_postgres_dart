@@ -9,6 +9,7 @@ import 'package:paqueteria_barranco/utilities/validate_extensions.dart';
 import 'package:paqueteria_barranco/widget/page_loading_absorb_pointer.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
+import 'package:uuid/uuid.dart';
 
 class RutasPages extends StatefulWidget {
   const RutasPages({super.key});
@@ -113,13 +114,14 @@ class _FormRutaWidgetState extends State<FormRutaWidget> {
 
   late bool edit;
   Map<String, dynamic> data = {};
-  TimeOfDay? time;
 
   @override
   void initState() {
     edit = widget.ruta != null;
     if (edit) {
       data = widget.ruta!.toMap();
+      data['addresses'] =
+          widget.ruta!.direcciones.map((e) => e.toMap()).toList();
     }
     super.initState();
   }
@@ -165,6 +167,45 @@ class _FormRutaWidgetState extends State<FormRutaWidget> {
                   isRequired: true,
                 ),
                 const SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text("Direcciones:"),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        if (data['addresses'] == null) {
+                          data['addresses'] = [
+                            {
+                              "uuid": const Uuid().v4(),
+                            }
+                          ];
+                        } else {
+                          data['addresses'].add({
+                            "uuid": const Uuid().v4(),
+                          });
+                        }
+                        setState(() {});
+                      },
+                      icon: const Icon(Icons.add),
+                      label: const Text('Agregar'),
+                    )
+                  ],
+                ),
+                if (data['addresses'] != null &&
+                    (data['addresses'] as List).isNotEmpty)
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: (data['addresses'] as List).length,
+                    itemBuilder: (_, int i) {
+                      return _addressesForm(
+                        (data['addresses'] as List)[i],
+                        i,
+                        ValueKey((data['addresses'] as List)[i]['uuid']),
+                      );
+                    },
+                  ),
+                const SizedBox(height: 15),
                 if (edit)
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -203,6 +244,96 @@ class _FormRutaWidgetState extends State<FormRutaWidget> {
           ),
         );
       },
+    );
+  }
+
+  Widget _addressesForm(
+    Map<dynamic, dynamic> body,
+    int index,
+    Key key,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      key: key,
+      children: [
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            Text(
+              'Dirección ${index + 1}',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                (data['addresses'] as List).removeAt(index);
+                setState(() {});
+              },
+              icon: const Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+        Forms.textField(
+          hintText: "",
+          labelText: "Nombre del fraccionamiento",
+          initialValue: body['frac_nombre'],
+          onChanged: (value) => body['frac_nombre'] = value,
+          validators: (value) => value!.validatorLeesThan50,
+          isRequired: true,
+        ),
+        const SizedBox(height: 5),
+        Forms.textField(
+          hintText: "",
+          labelText: "Calle",
+          initialValue: body['calle'],
+          onChanged: (value) => body['calle'] = value,
+          validators: (value) => value!.validatorLeesThan50,
+          isRequired: true,
+        ),
+        const SizedBox(height: 5),
+        Forms.textField(
+          hintText: "",
+          labelText: "Cp",
+          initialValue: body['cp'],
+          onChanged: (value) => body['cp'] = value,
+          validators: (value) => value!.validatorLeesThan50,
+          isRequired: true,
+        ),
+        const SizedBox(height: 5),
+        Forms.textField(
+          hintText: "",
+          labelText: "Colonia",
+          initialValue: body['colonia'],
+          onChanged: (value) => body['colonia'] = value,
+          validators: (value) => value!.validatorLeesThan50,
+          isRequired: true,
+        ),
+        const SizedBox(height: 5),
+        Forms.textField(
+          hintText: "",
+          labelText: "Estado",
+          initialValue: body['estado'],
+          onChanged: (value) => body['estado'] = value,
+          validators: (value) => value!.validatorLeesThan50,
+          isRequired: true,
+        ),
+        const SizedBox(height: 5),
+        Forms.textField(
+          hintText: "",
+          labelText: "Municipio",
+          initialValue: body['municipio'],
+          onChanged: (value) => body['municipio'] = value,
+          validators: (value) => value!.validatorLeesThan50,
+          isRequired: true,
+        ),
+        const SizedBox(height: 15),
+      ],
     );
   }
 

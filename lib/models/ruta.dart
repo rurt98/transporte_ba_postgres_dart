@@ -1,15 +1,20 @@
 import 'dart:convert';
 
+import 'package:paqueteria_barranco/models/address.dart';
+
 class Ruta {
   final int id;
   final String distancia;
   final String nombre;
   final String tiempo;
+  final List<Address> direcciones;
+
   Ruta({
     required this.id,
     required this.distancia,
     required this.nombre,
     required this.tiempo,
+    required this.direcciones,
   });
 
   Ruta copyWith({
@@ -17,12 +22,14 @@ class Ruta {
     String? distancia,
     String? nombre,
     String? tiempo,
+    List<Address>? direcciones,
   }) {
     return Ruta(
       id: id ?? this.id,
       distancia: distancia ?? this.distancia,
       nombre: nombre ?? this.nombre,
       tiempo: tiempo ?? this.tiempo,
+      direcciones: direcciones ?? this.direcciones,
     );
   }
 
@@ -35,12 +42,17 @@ class Ruta {
     };
   }
 
-  factory Ruta.fromMap(Map<String, dynamic> map) {
+  factory Ruta.fromMap(dynamic json) {
+    var direccionesList = json[0]['direcciones'] as List;
+    List<Address> direcciones =
+        direccionesList.map((i) => Address.fromMap(i)).toList();
+
     return Ruta(
-      id: map['id'],
-      distancia: map['distancia'] as String,
-      nombre: map['nombre'] as String,
-      tiempo: map['tiempo'] as String,
+      id: json[0]['id'],
+      nombre: json[0]['nombre'],
+      distancia: json[0]['distancia'],
+      tiempo: json[0]['tiempo'],
+      direcciones: direcciones,
     );
   }
 

@@ -152,7 +152,7 @@ class EmpleadoProvider extends ChangeNotifier {
       });
 
       await connection.query('''
-        UPDATE empleado set nombre = @nombre, num_licencia = @num_licencia, salario = @salario, id_direccion = @id_diccionario
+        UPDATE empleado set nombre = @nombre, num_licencia = @num_licencia, salario = @salario, id_direccion = @id_direccion
         WHERE id = @id
         ''', substitutionValues: {
         'id': id,
