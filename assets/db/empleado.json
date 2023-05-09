@@ -1,0 +1,15 @@
+[{
+
+        "nombre": "Juan Perez",
+        "num_licencia": 123456789,
+        "salario": 15000.0,
+        "id_direccion": 4
+    },
+    {
+
+        "nombre": "Maria Hernandez",
+        "num_licencia": 987654321,
+        "salario": 20000.0,
+        "id_direccion": 5
+    }
+]

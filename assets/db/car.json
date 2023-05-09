@@ -1,0 +1,18 @@
+[{
+
+        "marca": "Ford",
+        "modelo": "F-150",
+        "cap_carga": "2 toneladas"
+    },
+    {
+        "marca": "Chevrolet",
+        "modelo": "Silverado",
+        "cap_carga": "3 toneladas"
+    },
+    {
+
+        "marca": "Nissan",
+        "modelo": "Frontier",
+        "cap_carga": "1.5 toneladas"
+    }
+]

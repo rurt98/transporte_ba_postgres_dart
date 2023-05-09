@@ -1,0 +1,11 @@
+[{
+    "peso": 10,
+    "tamanio": 5.5,
+    "f_ent_est": "2023-05-12 10:00:00",
+    "f_envio": "2023-05-10 15:30:00",
+    "cobro": 250.99,
+    "entregado": false,
+    "id_direccion": 1,
+    "id_cliente": 1,
+    "id_vehiculo": 1
+}]

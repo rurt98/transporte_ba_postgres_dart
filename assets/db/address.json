@@ -1,0 +1,61 @@
+[{
+        "frac_nombre": "Fraccionamiento los Alamos",
+        "calle": "Calle 12",
+        "cp": "45060",
+        "colonia": "Los Alamos",
+        "estado": "Baja California",
+        "municipio": "Baja",
+        "ruta_id": 1,
+        "direccion": "Calle 12, Los Alamos, Baja California, CP 45060"
+    },
+    {
+        "frac_nombre": "Fraccionamiento Jardines del Valle",
+        "calle": "Calle Miguel Hidalgo",
+        "cp": "45670",
+        "colonia": "Jardines del Valle",
+        "estado": "Baja California",
+        "municipio": "Tlajomulco de Zúñiga",
+        "ruta_id": 1,
+        "direccion": "Calle Miguel Hidalgo, Jardines del Valle, Tlajomulco de Zúñiga, Baja California, CP 45670"
+    },
+    {
+        "frac_nombre": "Fraccionamiento Los Pinos",
+        "calle": "Calle Roble",
+        "cp": "44100",
+        "colonia": "Los Pinos",
+        "estado": "Sonora",
+        "municipio": "Guadalajara",
+        "ruta_id": 2,
+        "direccion": "Calle Roble, Los Pinos, Sonora, CP 44100"
+    },
+    {
+        "frac_nombre": "Fraccionamiento Arandas",
+        "calle": "Hacienda la llave 2316",
+        "cp": "44520",
+        "colonia": "Oblatos",
+        "estado": "Jalisco",
+        "municipio": "Guadalajara",
+        "ruta_id": null,
+        "direccion": "Hacienda la llave 2316, Oblatos, Jalisco, CP 44520"
+    },
+    {
+        "frac_nombre": "Fraccionamiento Arandas",
+        "calle": "Hacienda la venta",
+        "cp": "44530",
+        "colonia": "Oblatos",
+        "estado": "Jalisco",
+        "municipio": "Guadalajara",
+        "ruta_id": null,
+        "direccion": "Hacienda la venta, Oblatos, Jalisco, CP 44530"
+    },
+    {
+        "frac_nombre": "Fraccionamiento Las Flores",
+        "calle": "Avenida Solidaridad",
+        "cp": "45150",
+        "colonia": "Lomas del Gallo",
+        "estado": "Jalisco",
+        "municipio": "Guadalajara",
+        "ruta_id": null,
+        "direccion": "Avenida Solidaridad, Lomas del Gallo, Guadalajara, Jalisco, CP 45150"
+    }
+]
