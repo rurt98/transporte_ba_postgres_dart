@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paqueteria_barranco/pages/home_page.dart';
 import 'package:paqueteria_barranco/provider/cars_provider.dart';
+import 'package:paqueteria_barranco/provider/clientes_provider.dart';
 import 'package:paqueteria_barranco/provider/empleado_provider.dart';
 import 'package:paqueteria_barranco/provider/rutas_provider.dart';
 import 'package:paqueteria_barranco/services/add_addresses_service.dart';
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => AddAddressesService(connection),
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) => ClientesProvider(connection),
             ),
           ],
           child: MaterialApp(

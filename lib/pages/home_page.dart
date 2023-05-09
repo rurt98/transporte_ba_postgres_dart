@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paqueteria_barranco/pages/cars_page.dart';
+import 'package:paqueteria_barranco/pages/clientes_screen.dart';
 import 'package:paqueteria_barranco/pages/empleados_screen.dart';
 import 'package:paqueteria_barranco/pages/rutas_page.dart';
 
@@ -63,10 +64,16 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 8),
                   _buildCard(
-                      txt: 'Clientes',
-                      subtitle: 'Clientes registrados',
-                      icon: Icons.groups,
-                      onTap: () {}),
+                    txt: 'Clientes',
+                    subtitle: 'Clientes registrados',
+                    icon: Icons.groups,
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ClientesScreen(),
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   _buildCard(
                       txt: 'Viajes',

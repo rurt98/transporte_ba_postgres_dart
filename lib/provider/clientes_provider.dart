@@ -2,17 +2,18 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:paqueteria_barranco/models/address.dart';
+import 'package:paqueteria_barranco/models/cliente.dart';
 import 'package:paqueteria_barranco/models/empleado.dart';
 import 'package:postgres/postgres.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-class EmpleadoProvider extends ChangeNotifier {
+class ClientesProvider extends ChangeNotifier {
   final PostgreSQLConnection connection;
 
-  EmpleadoProvider(this.connection);
+  ClientesProvider(this.connection);
 
   // State
-  List<Empleado> empleados = [];
+  List<Cliente> clientes = [];
 
   // Estado loading
   bool _isLoading = false;
@@ -26,19 +27,19 @@ class EmpleadoProvider extends ChangeNotifier {
     try {
       loading = true;
       final res = await connection.query(
-        '''SELECT Empleado.*, Direccion.frac_nombre, Direccion.calle, Direccion.cp, Direccion.colonia, Direccion.estado, Direccion.municipio
-          FROM Empleado
-          LEFT JOIN Direccion ON Empleado.id_direccion = Direccion.id;
+        '''SELECT Cliente.*, Direccion.frac_nombre, Direccion.calle, Direccion.cp, Direccion.colonia, Direccion.estado, Direccion.municipio
+          FROM Cliente
+          LEFT JOIN Direccion ON Cliente.id_direccion = Direccion.id;
         ''',
       );
 
-      empleados = res
+      clientes = res
           .map(
-            (data) => Empleado(
+            (data) => Cliente(
               id: data[0],
               nombre: data[1],
-              num_licencia: data[2],
-              salario: data[3],
+              num_telefono: data[2],
+              email: data[3],
               address: Address(
                 id: data[4],
                 frac_nombre: data[5],
@@ -63,22 +64,22 @@ class EmpleadoProvider extends ChangeNotifier {
 
   Future populate() async {
     try {
-      if (empleados.isNotEmpty) return;
+      if (clientes.isNotEmpty) return;
 
       await connection.transaction((ctx) async {
         String jsonString =
-            await rootBundle.loadString('assets/db/empleado.json');
+            await rootBundle.loadString('assets/db/cliente.json');
         final mockData = json.decode(jsonString);
         final mockDataStream = Stream.fromIterable(mockData);
 
         await for (var row in mockDataStream) {
           await ctx.query('''
-            INSERT INTO empleado (nombre,num_licencia,salario, id_direccion)
-            VALUES (@nombre,@num_licencia,@salario, @id_direccion)
+            INSERT INTO cliente (nombre,num_telefono,email, id_direccion)
+            VALUES (@nombre,@num_telefono,@email, @id_direccion)
           ''', substitutionValues: {
             'nombre': row['nombre'],
-            'num_licencia': row['num_licencia'],
-            'salario': row['salario'],
+            'num_telefono': row['num_telefono'],
+            'email': row['email'],
             'id_direccion': row['id_direccion'],
           });
         }
@@ -110,12 +111,12 @@ class EmpleadoProvider extends ChangeNotifier {
       });
 
       await connection.query('''
-        INSERT INTO empleado (nombre,num_licencia,salario,id_direccion)
-        VALUES (@nombre,@num_licencia,@salario,@id_direccion)
+         INSERT INTO cliente (nombre,num_telefono,email, id_direccion)
+         VALUES (@nombre,@num_telefono,@email, @id_direccion)
         ''', substitutionValues: {
         'nombre': data['nombre'],
-        'num_licencia': data['num_licencia'],
-        'salario': data['salario'],
+        'num_telefono': data['num_telefono'],
+        'email': data['email'],
         'id_direccion': resAddress[0][0],
       });
 
@@ -152,13 +153,13 @@ class EmpleadoProvider extends ChangeNotifier {
       });
 
       await connection.query('''
-        UPDATE empleado set nombre = @nombre, num_licencia = @num_licencia, salario = @salario, id_direccion = @id_diccionario
+        UPDATE cliente set nombre = @nombre, num_telefono = @num_telefono, email = @email, id_direccion = @id_direccion
         WHERE id = @id
         ''', substitutionValues: {
         'id': id,
         'nombre': data['nombre'],
-        'num_licencia': data['num_licencia'],
-        'salario': data['salario'],
+        'num_telefono': data['num_telefono'],
+        'email': data['email'],
         'id_direccion': addressId,
       });
 
@@ -179,13 +180,13 @@ class EmpleadoProvider extends ChangeNotifier {
   }) async {
     try {
       await connection.query('''
-        DELETE FROM empleado
+        DELETE FROM cliente
         WHERE id = @id
         ''', substitutionValues: {
         'id': id,
       });
 
-      empleados.removeWhere((e) => e.id == id);
+      clientes.removeWhere((e) => e.id == id);
 
       notifyListeners();
 
