@@ -3,7 +3,16 @@
         "nombre": "Juan Perez",
         "num_licencia": 123456789,
         "salario": 15000.0,
-        "id_direccion": 4
+
+        "address": {
+            "frac_nombre": "Fraccionamiento Arandas",
+            "calle": "Hacienda la venta",
+            "cp": "44530",
+            "colonia": "Oblatos",
+            "estado": "Jalisco",
+            "municipio": "Guadalajara",
+            "ruta_id": null
+        }
     },
     {
 

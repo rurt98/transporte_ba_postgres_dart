@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paqueteria_barranco/pages/cars_page.dart';
+import 'package:paqueteria_barranco/pages/empleados_screen.dart';
 import 'package:paqueteria_barranco/pages/rutas_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -50,10 +51,16 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 8),
                   _buildCard(
-                      txt: 'Empleados',
-                      subtitle: 'Empleados registrados',
-                      icon: Icons.engineering,
-                      onTap: () {}),
+                    txt: 'Empleados',
+                    subtitle: 'Empleados registrados',
+                    icon: Icons.engineering,
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const EmpleadosScreen(),
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   _buildCard(
                       txt: 'Clientes',

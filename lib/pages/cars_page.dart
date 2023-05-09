@@ -131,7 +131,7 @@ class _FormCarWidgetState extends State<FormCarWidget> {
         return FormTemplate(
           scrollController: scrollController,
           loading: loading,
-          titulo: "${edit ? 'Editar' : 'Nuevo'} ruta",
+          titulo: "${edit ? 'Editar' : 'Nuevo'} vehículo",
           onPressSave: _onPressSave,
           body: Form(
             key: _formKey,

@@ -25,7 +25,7 @@ class CarsProvider extends ChangeNotifier {
     try {
       loading = true;
       final res = await connection.query(
-        'SELECT id, marca, modelo, cap_carga FROM vehiculo',
+        'SELECT * FROM vehiculo',
       );
 
       vehiculos = res

@@ -5,8 +5,7 @@
         "colonia": "Los Alamos",
         "estado": "Baja California",
         "municipio": "Baja",
-        "ruta_id": 1,
-        "direccion": "Calle 12, Los Alamos, Baja California, CP 45060"
+        "ruta_id": 1
     },
     {
         "frac_nombre": "Fraccionamiento Jardines del Valle",
@@ -15,8 +14,7 @@
         "colonia": "Jardines del Valle",
         "estado": "Baja California",
         "municipio": "Tlajomulco de Zúñiga",
-        "ruta_id": 1,
-        "direccion": "Calle Miguel Hidalgo, Jardines del Valle, Tlajomulco de Zúñiga, Baja California, CP 45670"
+        "ruta_id": 1
     },
     {
         "frac_nombre": "Fraccionamiento Los Pinos",
@@ -25,8 +23,7 @@
         "colonia": "Los Pinos",
         "estado": "Sonora",
         "municipio": "Guadalajara",
-        "ruta_id": 2,
-        "direccion": "Calle Roble, Los Pinos, Sonora, CP 44100"
+        "ruta_id": 2
     },
     {
         "frac_nombre": "Fraccionamiento Arandas",
@@ -35,8 +32,7 @@
         "colonia": "Oblatos",
         "estado": "Jalisco",
         "municipio": "Guadalajara",
-        "ruta_id": null,
-        "direccion": "Hacienda la llave 2316, Oblatos, Jalisco, CP 44520"
+        "ruta_id": null
     },
     {
         "frac_nombre": "Fraccionamiento Arandas",
@@ -45,8 +41,7 @@
         "colonia": "Oblatos",
         "estado": "Jalisco",
         "municipio": "Guadalajara",
-        "ruta_id": null,
-        "direccion": "Hacienda la venta, Oblatos, Jalisco, CP 44530"
+        "ruta_id": null
     },
     {
         "frac_nombre": "Fraccionamiento Las Flores",
@@ -55,7 +50,6 @@
         "colonia": "Lomas del Gallo",
         "estado": "Jalisco",
         "municipio": "Guadalajara",
-        "ruta_id": null,
-        "direccion": "Avenida Solidaridad, Lomas del Gallo, Guadalajara, Jalisco, CP 45150"
+        "ruta_id": null
     }
 ]

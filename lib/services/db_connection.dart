@@ -60,7 +60,7 @@ CREATE TABLE Direccion (
     colonia VARCHAR(50) not null,
     estado VARCHAR(50),
     municipio VARCHAR(50) not null,
-    ruta_id INTEGER not null,
+    ruta_id INTEGER,
     FOREIGN KEY (ruta_id) REFERENCES Ruta(id)
 )
     ''');
