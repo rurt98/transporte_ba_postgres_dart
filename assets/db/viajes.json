@@ -1,0 +1,51 @@
+[{
+    "car_viaja": [{
+        "id_ruta": 1,
+        "id_vehiculo": 1
+
+    }, {
+        "id_ruta": 2,
+        "id_vehiculo": 1
+    }],
+    "empleado_maneja": {
+        "id_vehiculo": 1,
+        "id_empleado": 2,
+        "fecha_m": "2023-05-12 17:33:00",
+        "hr_salida": "2023-05-12 17:33:00",
+        "hr_llegada": "2023-05-12 17:33:00"
+    },
+    "paquetes": [{
+            "peso": 30,
+            "tamanio": 10,
+            "f_ent_est": "2023-05-13 14:30:00",
+            "f_envio": "2023-05-12 14:30:00",
+            "cobro": 22000,
+            "entregado": false,
+            "id_direccion": 1,
+            "id_cliente": 1,
+            "id_vehiculo": 1
+        },
+        {
+            "peso": 40,
+            "tamanio": 5,
+            "f_ent_est": "2023-05-13 14:30:00",
+            "f_envio": "2023-05-12 14:30:00",
+            "cobro": 32000,
+            "entregado": false,
+            "id_direccion": 1,
+            "id_cliente": 1,
+            "id_vehiculo": 1
+        },
+        {
+            "peso": 100,
+            "tamanio": 15,
+            "f_ent_est": "2023-05-13 14:30:00",
+            "f_envio": "2023-05-12 14:30:00",
+            "cobro": 50000,
+            "entregado": false,
+            "id_direccion": 3,
+            "id_cliente": 1,
+            "id_vehiculo": 1
+        }
+    ]
+}]

@@ -1,15 +1,17 @@
 import 'dart:convert';
 
 class Vehiculo {
-  final int id;
-  final String marca;
-  final String modelo;
-  final String cap_carga;
+  final int? id;
+  final String? marca;
+  final String? modelo;
+  final String? cap_carga;
+  final bool? disponible;
   Vehiculo({
-    required this.id,
-    required this.marca,
-    required this.modelo,
-    required this.cap_carga,
+    this.id,
+    this.marca,
+    this.modelo,
+    this.cap_carga,
+    this.disponible = true,
   });
 
   Vehiculo copyWith({
@@ -17,12 +19,14 @@ class Vehiculo {
     String? marca,
     String? modelo,
     String? cap_carga,
+    bool? disponible,
   }) {
     return Vehiculo(
       id: id ?? this.id,
       marca: marca ?? this.marca,
       modelo: modelo ?? this.modelo,
       cap_carga: cap_carga ?? this.cap_carga,
+      disponible: disponible ?? this.disponible,
     );
   }
 
@@ -37,10 +41,11 @@ class Vehiculo {
 
   factory Vehiculo.fromMap(Map<String, dynamic> map) {
     return Vehiculo(
-      id: map['id'].toInt() as int,
-      marca: map['marca'] as String,
-      modelo: map['modelo'] as String,
-      cap_carga: map['cap_carga'] as String,
+      id: map['id'].toInt() as int?,
+      marca: map['marca'] as String?,
+      modelo: map['modelo'] as String?,
+      disponible: map['disponible'] as bool?,
+      cap_carga: map['cap_carga'] as String?,
     );
   }
 

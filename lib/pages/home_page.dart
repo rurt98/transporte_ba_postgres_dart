@@ -3,6 +3,7 @@ import 'package:paqueteria_barranco/pages/cars_page.dart';
 import 'package:paqueteria_barranco/pages/clientes_screen.dart';
 import 'package:paqueteria_barranco/pages/empleados_screen.dart';
 import 'package:paqueteria_barranco/pages/rutas_page.dart';
+import 'package:paqueteria_barranco/pages/viajes_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -76,10 +77,16 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 8),
                   _buildCard(
-                      txt: 'Viajes',
-                      subtitle: 'Viajes registrados',
-                      icon: Icons.send,
-                      onTap: () {}),
+                    txt: 'Viajes',
+                    subtitle: 'Viajes registrados',
+                    icon: Icons.send,
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ViajesPage(),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

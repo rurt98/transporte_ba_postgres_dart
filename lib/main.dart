@@ -4,6 +4,7 @@ import 'package:paqueteria_barranco/provider/cars_provider.dart';
 import 'package:paqueteria_barranco/provider/clientes_provider.dart';
 import 'package:paqueteria_barranco/provider/empleado_provider.dart';
 import 'package:paqueteria_barranco/provider/rutas_provider.dart';
+import 'package:paqueteria_barranco/provider/viajes_provider.dart';
 import 'package:paqueteria_barranco/services/add_addresses_service.dart';
 import 'package:paqueteria_barranco/services/db_connection.dart';
 import 'package:postgres/postgres.dart';
@@ -44,6 +45,9 @@ class MyApp extends StatelessWidget {
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => ClientesProvider(connection),
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) => ViajesProvider(connection),
             ),
           ],
           child: MaterialApp(

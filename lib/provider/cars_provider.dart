@@ -21,6 +21,9 @@ class CarsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<Vehiculo> get vehiculosNoOcupados =>
+      vehiculos.where((e) => e.disponible!).toList();
+
   Future<List<Vehiculo>?> getAll() async {
     try {
       loading = true;
@@ -34,7 +37,8 @@ class CarsProvider extends ChangeNotifier {
               id: data[0],
               marca: data[1],
               modelo: data[2],
-              cap_carga: data[3],
+              disponible: data[3],
+              cap_carga: data[4],
             ),
           )
           .toList();

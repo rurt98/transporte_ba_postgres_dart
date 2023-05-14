@@ -1,19 +1,18 @@
 import 'dart:convert';
-
 import 'package:paqueteria_barranco/models/address.dart';
 
 class Empleado {
-  final int id;
-  final String nombre;
-  final int num_licencia;
-  final double salario;
-  final Address address;
+  final int? id;
+  final String? nombre;
+  final int? num_licencia;
+  final double? salario;
+  final Address? address;
   Empleado({
-    required this.id,
-    required this.nombre,
-    required this.num_licencia,
-    required this.salario,
-    required this.address,
+    this.id,
+    this.nombre,
+    this.num_licencia,
+    this.salario,
+    this.address,
   });
 
   Empleado copyWith({
@@ -38,17 +37,19 @@ class Empleado {
       'nombre': nombre,
       'num_licencia': num_licencia,
       'salario': salario,
-      "address": address.toMap(),
+      'address': address?.toMap(),
     };
   }
 
   factory Empleado.fromMap(Map<String, dynamic> map) {
     return Empleado(
-      id: map['id'].toInt() as int,
-      nombre: map['nombre'] as String,
-      num_licencia: map['num_licencia'].toInt() as int,
-      salario: map['salario'],
-      address: Address.fromMap(map["address"]),
+      id: map['id'] as int?,
+      nombre: map['nombre'] as String?,
+      num_licencia: map['num_licencia'] as int?,
+      salario: map['salario'] as double?,
+      address: map['address'] != null
+          ? Address.fromMap(map['address'] as Map<String, dynamic>)
+          : null,
     );
   }
 
@@ -59,7 +60,7 @@ class Empleado {
 
   @override
   String toString() {
-    return 'Empleado(id: $id, nombre: $nombre, num_licencia: $num_licencia, salario: $salario, id_direccion: ${address.toString()})';
+    return 'Empleado(id: $id, nombre: $nombre, num_licencia: $num_licencia, salario: $salario, address: $address)';
   }
 
   @override

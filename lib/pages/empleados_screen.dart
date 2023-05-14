@@ -89,7 +89,11 @@ class _EmpleadosScreenState extends State<EmpleadosScreen> {
             empleado: empleado,
           ),
         ),
-        title: Text(empleado.nombre),
+        leading: const Icon(
+          Icons.person,
+          size: 40,
+        ),
+        title: Text(empleado.nombre ?? '-'),
         subtitle: Text(empleado.num_licencia.toString()),
       ),
     );
@@ -122,7 +126,7 @@ class _FormEmpleadoWidgetState extends State<FormEmpleadoWidget> {
     edit = widget.empleado != null;
     if (edit) {
       data = widget.empleado!.toMap();
-      data.addAll(widget.empleado!.address.toMap());
+      data.addAll(widget.empleado!.address!.toMap());
     }
     super.initState();
   }
@@ -257,7 +261,7 @@ class _FormEmpleadoWidgetState extends State<FormEmpleadoWidget> {
 
                       final successful =
                           await context.read<EmpleadoProvider>().eliminar(
-                                id: widget.empleado!.id,
+                                id: widget.empleado!.id!,
                                 onError: () => ShowSnackBar.showError(context),
                               );
 
@@ -290,8 +294,8 @@ class _FormEmpleadoWidgetState extends State<FormEmpleadoWidget> {
 
     if (edit) {
       response200 = await context.read<EmpleadoProvider>().editar(
-            id: widget.empleado!.id,
-            addressId: widget.empleado!.address.id,
+            id: widget.empleado!.id!,
+            addressId: widget.empleado!.address!.id!,
             data: data,
             onError: () => ShowSnackBar.showError(context),
           );

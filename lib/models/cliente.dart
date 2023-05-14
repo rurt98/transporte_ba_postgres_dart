@@ -3,17 +3,17 @@ import 'dart:convert';
 import 'package:paqueteria_barranco/models/address.dart';
 
 class Cliente {
-  final int id;
-  final String nombre;
-  final String num_telefono;
-  final String email;
-  final Address address;
+  final int? id;
+  final String? nombre;
+  final String? num_telefono;
+  final String? email;
+  final Address? address;
   Cliente({
-    required this.id,
-    required this.nombre,
-    required this.num_telefono,
-    required this.email,
-    required this.address,
+    this.id,
+    this.nombre,
+    this.num_telefono,
+    this.email,
+    this.address,
   });
 
   Cliente copyWith({
@@ -38,17 +38,19 @@ class Cliente {
       'nombre': nombre,
       'num_telefono': num_telefono,
       'email': email,
-      'address': address.toMap(),
+      'address': address?.toMap(),
     };
   }
 
   factory Cliente.fromMap(Map<String, dynamic> map) {
     return Cliente(
-      id: map['id'].toInt() as int,
-      nombre: map['nombre'] as String,
-      num_telefono: map['num_telefono'] as String,
+      id: map['id'] as int?,
+      nombre: map['nombre'] as String?,
+      num_telefono: map['num_telefono'] as String?,
       email: map['email'] as String,
-      address: Address.fromMap(map['address'] as Map<String, dynamic>),
+      address: map['address'] != null
+          ? Address.fromMap(map['address'] as Map<String, dynamic>)
+          : null,
     );
   }
 

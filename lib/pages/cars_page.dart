@@ -84,10 +84,10 @@ class _CarsPageState extends State<CarsPage> {
             vehiculo: vehiculo,
           ),
         ),
-        leading: const Icon(Icons.location_on, size: 30),
-        title: Text(vehiculo.marca),
-        subtitle: Text(vehiculo.modelo),
-        trailing: Text(vehiculo.cap_carga),
+        leading: const Icon(Icons.local_shipping, size: 30),
+        title: Text(vehiculo.marca ?? '-'),
+        subtitle: Text(vehiculo.modelo ?? '-'),
+        trailing: Text(vehiculo.cap_carga ?? '-'),
       ),
     );
   }
@@ -182,7 +182,7 @@ class _FormCarWidgetState extends State<FormCarWidget> {
 
                       final successful =
                           await context.read<CarsProvider>().eliminar(
-                                id: widget.vehiculo!.id,
+                                id: widget.vehiculo!.id!,
                                 onError: () => ShowSnackBar.showError(context),
                               );
 
@@ -215,7 +215,7 @@ class _FormCarWidgetState extends State<FormCarWidget> {
 
     if (edit) {
       response200 = await context.read<CarsProvider>().editar(
-            id: widget.vehiculo!.id,
+            id: widget.vehiculo!.id!,
             data: data,
             onError: () => ShowSnackBar.showError(context),
           );

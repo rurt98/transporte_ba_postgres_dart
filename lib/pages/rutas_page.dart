@@ -87,9 +87,9 @@ class _RutasPagesState extends State<RutasPages> {
           ),
         ),
         leading: const Icon(Icons.location_on, size: 30),
-        title: Text(ruta.nombre),
+        title: Text(ruta.nombre ?? "-"),
         subtitle: Text('${ruta.tiempo} hrs'),
-        trailing: Text(ruta.distancia),
+        trailing: Text(ruta.distancia ?? '-'),
       ),
     );
   }
@@ -121,7 +121,7 @@ class _FormRutaWidgetState extends State<FormRutaWidget> {
     if (edit) {
       data = widget.ruta!.toMap();
       data['addresses'] =
-          widget.ruta!.direcciones.map((e) => e.toMap()).toList();
+          widget.ruta!.direcciones?.map((e) => e.toMap()).toList() ?? [];
     }
     super.initState();
   }

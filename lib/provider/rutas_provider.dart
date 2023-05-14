@@ -35,7 +35,7 @@ class RutasProvider extends ChangeNotifier {
       ''',
       );
 
-      rutas = res.map((data) => Ruta.fromMap(data)).toList();
+      rutas = res.map((data) => Ruta.fromMap(data[0])).toList();
 
       loading = false;
       return rutas;

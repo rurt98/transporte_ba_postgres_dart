@@ -86,7 +86,11 @@ class _ClientesScreenState extends State<ClientesScreen> {
             cliente: cliente,
           ),
         ),
-        title: Text(cliente.nombre),
+        leading: const Icon(
+          Icons.person,
+          size: 40,
+        ),
+        title: Text(cliente.nombre ?? '-'),
         subtitle: Text(cliente.num_telefono.toString()),
       ),
     );
@@ -119,7 +123,7 @@ class _FormClienteWidgetState extends State<FormClienteWidget> {
     edit = widget.cliente != null;
     if (edit) {
       data = widget.cliente!.toMap();
-      data.addAll(widget.cliente!.address.toMap());
+      data.addAll(widget.cliente!.address!.toMap());
     }
     super.initState();
   }
@@ -254,7 +258,7 @@ class _FormClienteWidgetState extends State<FormClienteWidget> {
 
                       final successful =
                           await context.read<ClientesProvider>().eliminar(
-                                id: widget.cliente!.id,
+                                id: widget.cliente!.id!,
                                 onError: () => ShowSnackBar.showError(context),
                               );
 
@@ -287,8 +291,8 @@ class _FormClienteWidgetState extends State<FormClienteWidget> {
 
     if (edit) {
       response200 = await context.read<ClientesProvider>().editar(
-            id: widget.cliente!.id,
-            addressId: widget.cliente!.address.id,
+            id: widget.cliente!.id!,
+            addressId: widget.cliente!.address!.id!,
             data: data,
             onError: () => ShowSnackBar.showError(context),
           );

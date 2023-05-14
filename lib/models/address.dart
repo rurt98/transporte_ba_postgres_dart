@@ -1,23 +1,23 @@
 import 'dart:convert';
 
 class Address {
-  final int id;
-  final String frac_nombre;
-  final String calle;
-  final String cp;
-  final String colonia;
-  final String estado;
-  final String municipio;
-  int? ruta_id;
+  final int? id;
+  final String? frac_nombre;
+  final String? calle;
+  final String? cp;
+  final String? colonia;
+  final String? estado;
+  final String? municipio;
+  final int? ruta_id;
 
   Address({
-    required this.id,
-    required this.frac_nombre,
-    required this.calle,
-    required this.cp,
-    required this.colonia,
-    required this.estado,
-    required this.municipio,
+    this.id,
+    this.frac_nombre,
+    this.calle,
+    this.cp,
+    this.colonia,
+    this.estado,
+    this.municipio,
     this.ruta_id,
   });
 
@@ -58,14 +58,14 @@ class Address {
 
   factory Address.fromMap(Map<String, dynamic> map) {
     return Address(
-      id: map['id'].toInt() as int,
-      frac_nombre: map['frac_nombre'] as String,
-      calle: map['calle'] as String,
-      cp: map['cp'] as String,
-      colonia: map['colonia'] as String,
-      estado: map['estado'] as String,
-      municipio: map['municipio'] as String,
-      ruta_id: map['ruta_id'] == null ? null : map['ruta_id'].toInt() as int,
+      id: map['id'] as int?,
+      frac_nombre: map['frac_nombre'] as String?,
+      calle: map['calle'] as String?,
+      cp: map['cp'] as String?,
+      colonia: map['colonia'] as String?,
+      estado: map['estado'] as String?,
+      municipio: map['municipio'] as String?,
+      ruta_id: map['ruta_id'] as int?,
     );
   }
 
