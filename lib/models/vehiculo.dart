@@ -6,12 +6,14 @@ class Vehiculo {
   final String? modelo;
   final String? cap_carga;
   final bool? disponible;
+  final String? placa;
   Vehiculo({
     this.id,
     this.marca,
     this.modelo,
     this.cap_carga,
     this.disponible = true,
+    this.placa,
   });
 
   Vehiculo copyWith({
@@ -20,6 +22,7 @@ class Vehiculo {
     String? modelo,
     String? cap_carga,
     bool? disponible,
+    String? placa,
   }) {
     return Vehiculo(
       id: id ?? this.id,
@@ -27,6 +30,7 @@ class Vehiculo {
       modelo: modelo ?? this.modelo,
       cap_carga: cap_carga ?? this.cap_carga,
       disponible: disponible ?? this.disponible,
+      placa: placa ?? this.placa,
     );
   }
 
@@ -36,6 +40,7 @@ class Vehiculo {
       'marca': marca,
       'modelo': modelo,
       'cap_carga': cap_carga,
+      'placa': placa,
     };
   }
 
@@ -46,6 +51,7 @@ class Vehiculo {
       modelo: map['modelo'] as String?,
       disponible: map['disponible'] as bool?,
       cap_carga: map['cap_carga'] as String?,
+      placa: map['placa'] as String?,
     );
   }
 
@@ -56,7 +62,7 @@ class Vehiculo {
 
   @override
   String toString() {
-    return 'Vehiculo(id: $id, marca: $marca, modelo: $modelo, cap_carga: $cap_carga)';
+    return '$modelo, placa: $placa';
   }
 
   @override

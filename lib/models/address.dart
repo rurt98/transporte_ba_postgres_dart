@@ -76,7 +76,7 @@ class Address {
 
   @override
   String toString() {
-    return 'Address(id: $id, frac_nombre: $frac_nombre, calle: $calle, cp: $cp, colonia: $colonia, estado: $estado, municipio: $municipio, ruta_id: $ruta_id)';
+    return ' $frac_nombre\n calle: $calle\n cp: $cp\n colonia: $colonia\n estado: $estado\n municipio: $municipio';
   }
 
   @override

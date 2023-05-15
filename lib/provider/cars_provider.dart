@@ -63,12 +63,13 @@ class CarsProvider extends ChangeNotifier {
 
         await for (var row in mockDataStream) {
           await ctx.query('''
-            INSERT INTO vehiculo (marca,modelo,cap_carga)
-            VALUES (@marca,@modelo,@cap_carga)
+            INSERT INTO vehiculo (marca,modelo,cap_carga, placa)
+            VALUES (@marca,@modelo,@cap_carga,@placa)
           ''', substitutionValues: {
             'marca': row['marca'],
             'modelo': row['modelo'],
             'cap_carga': row['cap_carga'],
+            'placa': row['placa'],
           });
         }
       });
@@ -85,12 +86,13 @@ class CarsProvider extends ChangeNotifier {
   }) async {
     try {
       await connection.query('''
-        INSERT INTO vehiculo (marca,modelo,cap_carga)
-        VALUES (@marca,@modelo,@cap_carga)
+         INSERT INTO vehiculo (marca,modelo,cap_carga, placa)
+         VALUES (@marca,@modelo,@cap_carga,@placa)
         ''', substitutionValues: {
         'marca': data['marca'],
         'modelo': data['modelo'],
         'cap_carga': data['cap_carga'],
+        'placa': data['placa'],
       });
 
       getAll();
@@ -111,13 +113,14 @@ class CarsProvider extends ChangeNotifier {
   }) async {
     try {
       await connection.query('''
-        UPDATE vehiculo set marca = @marca, modelo = @modelo, cap_carga = @cap_carga
+        UPDATE vehiculo set marca = @marca, modelo = @modelo, cap_carga = @cap_carga, placa = @placa
         WHERE id = @id
         ''', substitutionValues: {
         'id': id,
         'marca': data['marca'],
         'modelo': data['modelo'],
         'cap_carga': data['cap_carga'],
+        'placa': data['placa'],
       });
 
       getAll();

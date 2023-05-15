@@ -2,17 +2,20 @@
 
         "marca": "Ford",
         "modelo": "F-150",
-        "cap_carga": "2 toneladas"
+        "cap_carga": "2 toneladas",
+        "placa": "F-32-10"
     },
     {
         "marca": "Chevrolet",
         "modelo": "Silverado",
-        "cap_carga": "3 toneladas"
+        "cap_carga": "3 toneladas",
+        "placa": "JPP-20-10"
     },
     {
 
         "marca": "Nissan",
         "modelo": "Frontier",
-        "cap_carga": "1.5 toneladas"
+        "cap_carga": "1.5 toneladas",
+        "placa": "12DHJL"
     }
 ]

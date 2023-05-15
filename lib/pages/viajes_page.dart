@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:paqueteria_barranco/models/address.dart';
+import 'package:paqueteria_barranco/models/cliente.dart';
 import 'package:paqueteria_barranco/models/empleado.dart';
 import 'package:paqueteria_barranco/models/ruta.dart';
 import 'package:paqueteria_barranco/models/vehiculo.dart';
 import 'package:paqueteria_barranco/models/viaje.dart';
 import 'package:paqueteria_barranco/provider/cars_provider.dart';
+import 'package:paqueteria_barranco/provider/clientes_provider.dart';
 import 'package:paqueteria_barranco/provider/empleado_provider.dart';
 import 'package:paqueteria_barranco/provider/rutas_provider.dart';
 import 'package:paqueteria_barranco/provider/viajes_provider.dart';
@@ -16,6 +19,7 @@ import 'package:paqueteria_barranco/utilities/validate_extensions.dart';
 import 'package:paqueteria_barranco/widget/page_loading_absorb_pointer.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
+import 'package:uuid/uuid.dart';
 
 class ViajesPage extends StatefulWidget {
   const ViajesPage({super.key});
@@ -155,6 +159,7 @@ class _FormViajeWidgetState extends State<FormViajeWidget> {
           body: Form(
             key: _formKey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Selector<CarsProvider, List<Vehiculo>>(
                   selector: (_, pro) => pro.vehiculosNoOcupados,
@@ -250,23 +255,56 @@ class _FormViajeWidgetState extends State<FormViajeWidget> {
                     );
                   },
                 ),
-                Forms.textField(
-                  hintText: "",
-                  labelText: "Modelo",
-                  initialValue: data['modelo'],
-                  onChanged: (value) => data['modelo'] = value,
-                  validators: (value) => value!.validatorLeesThan50,
-                  isRequired: true,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text("Paquetes:"),
+                    ElevatedButton.icon(
+                      onPressed:
+                          rutasSelected.isEmpty || vehiculoSelected == null
+                              ? null
+                              : () {
+                                  if (data['paquetes'] == null) {
+                                    data['paquetes'] = [
+                                      {
+                                        "uuid": const Uuid().v4(),
+                                        "id_vehiculo": vehiculoSelected!.id
+                                      }
+                                    ];
+                                  } else {
+                                    data['paquetes'].add({
+                                      "uuid": const Uuid().v4(),
+                                      "id_vehiculo": vehiculoSelected!.id
+                                    });
+                                  }
+                                  setState(() {});
+                                },
+                      icon: const Icon(Icons.add),
+                      label: const Text('Agregar'),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 5),
-                Forms.textField(
-                  hintText: "",
-                  labelText: "Capacidad de carga",
-                  initialValue: data['cap_carga'],
-                  onChanged: (value) => data['cap_carga'] = value,
-                  validators: (value) => value!.validatorLeesThan50,
-                  isRequired: true,
-                ),
+                if (rutasSelected.isEmpty || vehiculoSelected == null)
+                  const Text(
+                    "Se necesita seleccionar Rutas y Vehiculo",
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  ),
+                if (data['paquetes'] != null &&
+                    (data['paquetes'] as List).isNotEmpty)
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: (data['paquetes'] as List).length,
+                    itemBuilder: (_, int i) {
+                      return _paquetesForma(
+                        (data['paquetes'] as List)[i],
+                        i,
+                        ValueKey((data['paquetes'] as List)[i]['uuid']),
+                      );
+                    },
+                  ),
               ],
             ),
           ),
@@ -275,16 +313,173 @@ class _FormViajeWidgetState extends State<FormViajeWidget> {
     );
   }
 
+  Widget _paquetesForma(
+    Map<String, dynamic> body,
+    int index,
+    Key key,
+  ) {
+    List<Address> address = [];
+    for (var ruta in rutasSelected) {
+      address.addAll(ruta.direcciones!);
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      key: key,
+      children: [
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            Text(
+              'Paquete ${index + 1}',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                (data['paquetes'] as List).removeAt(index);
+                setState(() {});
+              },
+              icon: const Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+        Forms.textField(
+          hintText: "",
+          labelText: "Descripción",
+          initialValue: body['descripcion'],
+          onChanged: (value) => body['descripcion'] = value,
+          validators: (value) => value!.validatorLeesThan50,
+          isRequired: true,
+        ),
+        const SizedBox(height: 5),
+        Forms.textField(
+          hintText: "",
+          labelText: "Peso",
+          onChanged: (value) => body['peso'] = int.tryParse(value),
+          validators: (value) => value!.validatorLeesThan50,
+          isRequired: true,
+        ),
+        const SizedBox(height: 5),
+        Forms.textField(
+          hintText: "",
+          labelText: "Tamaño",
+          onChanged: (value) => body['tamanio'] = int.tryParse(value),
+          validators: (value) => value!.validatorLeesThan50,
+          isRequired: true,
+        ),
+        const SizedBox(height: 5),
+        Forms.datePicker(
+          context,
+          initialDate: body['f_ent_est'] != null
+              ? DateTime.parse(body['f_ent_est'])
+              : null,
+          labelText: "Estimación de fecha de entrega",
+          dateChanged: (value) => body['f_ent_est'] = value.toString(),
+          isRequired: true,
+        ),
+        Forms.datePicker(
+          context,
+          initialDate:
+              body['f_envio'] != null ? DateTime.parse(body['f_envio']) : null,
+          labelText: "Fecha de envió",
+          dateChanged: (value) => body['f_envio'] = value.toString(),
+          isRequired: true,
+        ),
+        const SizedBox(height: 5),
+        Selector<ClientesProvider, List<Cliente>>(
+          selector: (_, pro) => pro.clientes,
+          builder: (_, clientes, __) {
+            return Forms.dropdown<Cliente>(
+              context,
+              labelText: "Cliente",
+              value: null,
+              items: clientes
+                  .map((e) => DropdownMenuItem(
+                        value: e,
+                        child: Text(e.nombre!),
+                      ))
+                  .toList(),
+              onChanged: (value) {
+                body['id_cliente'] = value?.id.toString();
+              },
+              validators: (value) {
+                if (body['id_cliente'] == null) return 'Requerido';
+                return null;
+              },
+              isRequired: true,
+            );
+          },
+        ),
+        const SizedBox(height: 15),
+        Forms.dropdown<Address>(
+          context,
+          labelText: "Direccion",
+          value: null,
+          items: address
+              .map((e) => DropdownMenuItem(
+                    value: e,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(e.toString()),
+                    ),
+                  ))
+              .toList(),
+          onChanged: (value) {
+            body['id_direccion'] = value?.id.toString();
+          },
+          validators: (value) {
+            if (body['id_direccion'] == null) return 'Requerido';
+            return null;
+          },
+          isRequired: true,
+        )
+      ],
+    );
+  }
+
   Future _onPressSave() async {
     FocusScope.of(context).unfocus();
 
     if (_formKey.currentState?.validate() != true) return;
 
+    _formKey.currentState?.save();
+
+    data["car_viaja"] = [];
+
+    for (var ruta in rutasSelected) {
+      data["car_viaja"].add({
+        "id_ruta": ruta.id,
+        "id_vehiculo": vehiculoSelected!.id,
+      });
+    }
+
+    for (var element in data["paquetes"]) {
+      element["id_cliente"] = element["id_cliente"];
+      element['id_direccion'] = element["id_direccion"];
+    }
+
+    final now = DateTime.now();
+
+    data['empleado_maneja'] = {
+      "id_vehiculo": vehiculoSelected!.id,
+      "id_empleado": empleadoSelected!.id,
+      "fecha_m": now.add(const Duration(days: 1)),
+      "hr_salida": now.add(const Duration(days: 1)),
+      "hr_llegada": now.add(const Duration(days: 4)),
+    };
+
     bool response200 = false;
     _loading.value = true;
 
     response200 = await context.read<ViajesProvider>().agregar(
-          data: data,
+          row: data,
+          vehiculoID: vehiculoSelected!.id!,
           onError: () => ShowSnackBar.showError(context),
         );
 

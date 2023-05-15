@@ -163,6 +163,14 @@ class _FormCarWidgetState extends State<FormCarWidget> {
                   validators: (value) => value!.validatorLeesThan50,
                   isRequired: true,
                 ),
+                Forms.textField(
+                  hintText: "",
+                  labelText: "Placa",
+                  initialValue: data['placa'],
+                  onChanged: (value) => data['placa'] = value,
+                  validators: (value) => value!.validatorLeesThan50,
+                  isRequired: true,
+                ),
                 const SizedBox(height: 15),
                 if (edit)
                   ElevatedButton(

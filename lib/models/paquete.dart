@@ -7,6 +7,7 @@ class Paquete {
   DateTime? fEntEst;
   DateTime? fEnvio;
   bool? entregado;
+  double? costo;
 
   Paquete({
     this.id,
@@ -15,6 +16,7 @@ class Paquete {
     this.fEntEst,
     this.fEnvio,
     this.entregado,
+    this.costo,
   });
 
   Paquete copyWith({
@@ -24,6 +26,7 @@ class Paquete {
     DateTime? fEntEst,
     DateTime? fEnvio,
     bool? entregado,
+    double? costo,
   }) =>
       Paquete(
         id: id ?? this.id,
@@ -32,6 +35,7 @@ class Paquete {
         fEntEst: fEntEst ?? this.fEntEst,
         fEnvio: fEnvio ?? this.fEnvio,
         entregado: entregado ?? this.entregado,
+        costo: costo ?? this.costo,
       );
 
   factory Paquete.fromMap(Map<String, dynamic> json) => Paquete(
@@ -44,6 +48,7 @@ class Paquete {
         fEnvio:
             json["f_envio"] == null ? null : DateTime.parse(json["f_envio"]),
         entregado: json["entregado"],
+        costo: json['costo'],
       );
 
   Map<String, dynamic> toMap() => {
@@ -53,6 +58,7 @@ class Paquete {
         "f_ent_est": fEntEst?.toIso8601String(),
         "f_envio": fEnvio?.toIso8601String(),
         "entregado": entregado,
+        "costo": costo,
       };
 
   String toJson() => json.encode(toMap());

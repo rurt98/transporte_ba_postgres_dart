@@ -92,9 +92,10 @@ class RutasProvider extends ChangeNotifier {
 
       if (data['addresses'] != null && (data['addresses'] as List).isNotEmpty) {
         for (var address in data['addresses']) {
-          await connection.query('''
+          final response = await connection.query('''
           INSERT INTO direccion (frac_nombre,calle,cp,colonia,estado,municipio,ruta_id)
           VALUES (@frac_nombre,@calle,@cp,@colonia,@estado,@municipio,@ruta_id)
+           RETURNING id
         ''', substitutionValues: {
             'frac_nombre': address['frac_nombre'],
             'calle': address['calle'],
@@ -104,9 +105,21 @@ class RutasProvider extends ChangeNotifier {
             'municipio': address['municipio'],
             'ruta_id': res[0][0],
           });
+
+          await connection.query('''
+            INSERT INTO Tarifa (cobro,peso,tamanio,id_direccion)
+            VALUES (@cobro,@peso,@tamanio,@id_direccion)
+          ''', substitutionValues: {
+            'cobro': 60000,
+            'peso': 100,
+            'tamanio': 40,
+            'id_direccion': response[0][0],
+          });
         }
       }
 
+      // Se refresca la lista en la cache
+      // con el nuevo registro
       getAll();
 
       return true;

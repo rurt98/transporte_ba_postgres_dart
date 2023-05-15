@@ -48,7 +48,7 @@ class Ruta {
       nombre: json['nombre'] as String?,
       distancia: json['distancia'] as String?,
       tiempo: json['tiempo'] as String?,
-      direcciones: (json['ruta'] as List<dynamic>?)
+      direcciones: (json['direcciones'] as List<dynamic>?)
           ?.map((x) => Address.fromMap(x as Map<String, dynamic>))
           .toList(),
     );

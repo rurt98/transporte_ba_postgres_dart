@@ -78,6 +78,25 @@ class ViajesProvider extends ChangeNotifier {
     try {
       if (viajes.isNotEmpty) return;
 
+      await connection.transaction((ctx) async {
+        String jsonString =
+            await rootBundle.loadString('assets/db/tarifa.json');
+        final mockData = json.decode(jsonString);
+        final mockDataStream = Stream.fromIterable(mockData);
+
+        await for (var row in mockDataStream) {
+          await ctx.query('''
+            INSERT INTO Tarifa (cobro,peso,tamanio,id_direccion)
+            VALUES (@cobro,@peso,@tamanio,@id_direccion)
+          ''', substitutionValues: {
+            'cobro': row['cobro'],
+            'peso': row['peso'],
+            'tamanio': row['tamanio'],
+            'id_direccion': row['id_direccion'],
+          });
+        }
+      });
+
       await connection.query(
         '''
         UPDATE vehiculo set disponible = @disponible
@@ -116,8 +135,8 @@ class ViajesProvider extends ChangeNotifier {
 
           for (var element in row['paquetes']) {
             await ctx.query('''
-               INSERT INTO paquete (peso,tamanio,f_ent_est,f_envio,cobro,entregado,id_direccion,id_cliente,id_vehiculo)
-               VALUES (@peso,@tamanio,@f_ent_est,@f_envio,@cobro,@entregado,@id_direccion,@id_cliente,@id_vehiculo)
+               INSERT INTO paquete (peso,tamanio,f_ent_est,f_envio,cobro,entregado,id_direccion,id_cliente,id_vehiculo,descripcion)
+               VALUES (@peso,@tamanio,@f_ent_est,@f_envio,@cobro,@entregado,@id_direccion,@id_cliente,@id_vehiculo,@descripcion)
               ''', substitutionValues: {
               'peso': element['peso'],
               'tamanio': element['tamanio'],
@@ -128,6 +147,7 @@ class ViajesProvider extends ChangeNotifier {
               'id_direccion': element['id_direccion'],
               'id_cliente': element['id_cliente'],
               'id_vehiculo': element['id_vehiculo'],
+              'descripcion': element['descripcion'],
             });
           }
         }
@@ -140,18 +160,56 @@ class ViajesProvider extends ChangeNotifier {
   }
 
   Future<bool> agregar({
-    required Map<String, dynamic> data,
+    required Map<String, dynamic> row,
     required Function() onError,
+    required int vehiculoID,
   }) async {
     try {
+      await connection.query(
+        '''
+        UPDATE vehiculo set disponible = @disponible
+        WHERE id = @id
+        ''',
+        substitutionValues: {'id': vehiculoID, 'disponible': false},
+      );
+
+      for (var element in row['car_viaja']) {
+        await connection.query('''
+                INSERT INTO car_viaja (id_ruta,id_vehiculo)
+                VALUES (@id_ruta,@id_vehiculo)
+              ''', substitutionValues: {
+          'id_ruta': element['id_ruta'],
+          'id_vehiculo': element['id_vehiculo'],
+        });
+      }
+
       await connection.query('''
-        INSERT INTO vehiculo (marca,modelo,cap_carga)
-        VALUES (@marca,@modelo,@cap_carga)
-        ''', substitutionValues: {
-        'marca': data['marca'],
-        'modelo': data['modelo'],
-        'cap_carga': data['cap_carga'],
+              INSERT INTO empleado_maneja (id_vehiculo,id_empleado,fecha_m,hr_salida,hr_llegada)
+              VALUES (@id_vehiculo,@id_empleado,@hr_salida,@fecha_m,@hr_llegada)
+            ''', substitutionValues: {
+        'id_vehiculo': row['empleado_maneja']['id_vehiculo'],
+        'id_empleado': row['empleado_maneja']['id_empleado'],
+        'fecha_m': row['empleado_maneja']['fecha_m'],
+        'hr_llegada': row['empleado_maneja']['hr_llegada'],
+        'hr_salida': row['empleado_maneja']['hr_salida'],
       });
+
+      for (var element in row['paquetes']) {
+        await connection.query('''
+              INSERT INTO paquete (peso,tamanio,f_ent_est,f_envio,entregado,id_direccion,id_cliente,id_vehiculo,descripcion)
+               VALUES (@peso,@tamanio,@f_ent_est,@f_envio,@entregado,@id_direccion,@id_cliente,@id_vehiculo,@descripcion)
+              ''', substitutionValues: {
+          'peso': element['peso'],
+          'tamanio': element['tamanio'],
+          'f_ent_est': element['f_ent_est'],
+          'f_envio': element['f_envio'],
+          'entregado': false,
+          'id_direccion': element['id_direccion'],
+          'id_cliente': element['id_cliente'],
+          'id_vehiculo': element['id_vehiculo'],
+          'descripcion': element['descripcion'],
+        });
+      }
 
       getAll();
 

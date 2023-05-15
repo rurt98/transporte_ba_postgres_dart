@@ -23,7 +23,8 @@
             "entregado": false,
             "id_direccion": 1,
             "id_cliente": 1,
-            "id_vehiculo": 1
+            "id_vehiculo": 1,
+            "descripcion": "Botella de tequila"
         },
         {
             "peso": 40,
@@ -34,7 +35,8 @@
             "entregado": false,
             "id_direccion": 1,
             "id_cliente": 1,
-            "id_vehiculo": 1
+            "id_vehiculo": 1,
+            "descripcion": "Paquete de ropa"
         },
         {
             "peso": 100,
@@ -45,7 +47,8 @@
             "entregado": false,
             "id_direccion": 3,
             "id_cliente": 1,
-            "id_vehiculo": 1
+            "id_vehiculo": 1,
+            "descripcion": "Macetas"
         }
     ]
 }]

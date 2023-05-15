@@ -1,0 +1,74 @@
+[{
+        "cobro": 20000,
+        "peso": 25,
+        "tamanio": 10,
+        "id_direccion": 1
+    },
+    {
+        "cobro": 40000,
+        "peso": 50,
+        "tamanio": 20,
+        "id_direccion": 1
+    },
+    {
+        "cobro": 50000,
+        "peso": 75,
+        "tamanio": 30,
+        "id_direccion": 1
+    },
+    {
+        "cobro": 60000,
+        "peso": 100,
+        "tamanio": 40,
+        "id_direccion": 1
+    },
+    {
+        "cobro": 20000,
+        "peso": 25,
+        "tamanio": 10,
+        "id_direccion": 2
+    },
+    {
+        "cobro": 40000,
+        "peso": 50,
+        "tamanio": 20,
+        "id_direccion": 2
+    },
+    {
+        "cobro": 50000,
+        "peso": 75,
+        "tamanio": 30,
+        "id_direccion": 2
+    },
+    {
+        "cobro": 60000,
+        "peso": 100,
+        "tamanio": 40,
+        "id_direccion": 2
+    },
+    {
+        "cobro": 20000,
+        "peso": 25,
+        "tamanio": 10,
+        "id_direccion": 3
+    },
+    {
+        "cobro": 40000,
+        "peso": 50,
+        "tamanio": 20,
+        "id_direccion": 3
+    },
+    {
+        "cobro": 50000,
+        "peso": 75,
+        "tamanio": 30,
+        "id_direccion": 3
+    },
+    {
+        "cobro": 60000,
+        "peso": 100,
+        "tamanio": 40,
+        "id_direccion": 3
+    }
+
+]
